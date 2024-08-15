@@ -26,10 +26,13 @@
             font-size: 2em;
             margin-bottom: 10px;
         }
-        #upgradeButton {
+        #upgradeButton, #autoClickerButton {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 1em;
+        }
+        #autoClickerInfo {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -40,6 +43,10 @@
         <div id="stats">
             <div id="bubbleCount">0</div>
             <button id="upgradeButton">Upgrade: +1 Bubble Tea pro Klick</button>
+            <div id="autoClickerInfo">
+                <button id="autoClickerButton">Auto-Clicker: 1 Bubble Tea pro Sekunde (Kosten: 50 Bubble Tea)</button>
+                <div id="autoClickerStatus">Auto-Clicker: Nicht gekauft</div>
+            </div>
         </div>
     </div>
     
@@ -47,11 +54,16 @@
         // Initialwerte
         let bubbleCount = 0;
         let clickValue = 1;
+        let autoClickerActive = false;
+        const autoClickerCost = 50;
+        const autoClickerInterval = 1000; // Intervall in Millisekunden (1 Sekunde)
 
         // DOM-Elemente
         const bubbleTea = document.getElementById('bubbleTea');
         const bubbleCountDisplay = document.getElementById('bubbleCount');
         const upgradeButton = document.getElementById('upgradeButton');
+        const autoClickerButton = document.getElementById('autoClickerButton');
+        const autoClickerStatus = document.getElementById('autoClickerStatus');
 
         // Event-Listener für das Klicken auf das Bubble Tea Bild
         bubbleTea.addEventListener('click', () => {
@@ -63,6 +75,25 @@
         upgradeButton.addEventListener('click', () => {
             clickValue += 1;
             upgradeButton.textContent = `Upgrade: +${clickValue} Bubble Tea pro Klick`;
+        });
+
+        // Event-Listener für den Auto-Clicker-Kauf
+        autoClickerButton.addEventListener('click', () => {
+            if (bubbleCount >= autoClickerCost && !autoClickerActive) {
+                bubbleCount -= autoClickerCost;
+                bubbleCountDisplay.textContent = bubbleCount;
+                autoClickerActive = true;
+                autoClickerStatus.textContent = 'Auto-Clicker: Aktiviert';
+                autoClickerButton.textContent = 'Auto-Clicker: Bereits gekauft';
+                
+                // Starte den Auto-Clicker
+                setInterval(() => {
+                    if (autoClickerActive) {
+                        bubbleCount += 1;
+                        bubbleCountDisplay.textContent = bubbleCount;
+                    }
+                }, autoClickerInterval);
+            }
         });
     </script>
 </body>
