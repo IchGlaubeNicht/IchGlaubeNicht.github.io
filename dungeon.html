@@ -4,52 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dungeon Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            margin: 0;
-            padding: 0;
-        }
-        #gameContainer {
-            margin: 20px;
-            padding: 20px;
-            background: #34495e;
-            border-radius: 10px;
-        }
-        #textOutput {
-            margin: 20px 0;
-            height: 150px;
-            overflow-y: auto;
-            background: #2c3e50;
-            border: 1px solid #ecf0f1;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        #actionButtons, #attackButtons {
-            margin: 20px 0;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 5px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #backButton {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background-color: #e74c3c;
-        }
-        #playerInfo {
-            margin: 10px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="styledungeon.css">
 </head>
 <body>
 
@@ -58,120 +13,25 @@
         <div id="playerInfo">
             <div id="playerName">Name: </div>
             <div id="playerHealth">Lebenspunkte: </div>
+            <div id="currency">Perlen: 0</div>
         </div>
         <div id="textOutput">Willkommen im Dungeon! Gib dir einen Namen, um zu beginnen.</div>
         <div id="actionButtons">
             <button id="startButton">Spiel Starten</button>
+            <button id="searchMonsterButton" style="display: none;">Gegner Suchen</button>
         </div>
         <div id="attackButtons" style="display: none;">
             <button id="attackButton1">Schlag</button>
             <button id="attackButton2">Stich</button>
             <button id="attackButton3">Magie</button>
         </div>
+        <div id="upgradeButtons" style="display: none;">
+            <button id="upgradeAttackButton">Upgrade Angriff (Kosten: 50 Perlen)</button>
+            <button id="upgradeDefenseButton">Upgrade Verteidigung (Kosten: 50 Perlen)</button>
+        </div>
     </div>
 
     <button id="backButton" onclick="window.location.href='index.html'">Bubble Tea Clicker</button>
-
-    <script>
-        // Spielstatus
-        let playerName = '';
-        let playerHealth = 100;
-        let playerAttack = 10;
-        let playerDefense = 5;
-        let enemiesDefeated = 0;
-        let currentMonster = {};
-
-        const textOutput = document.getElementById('textOutput');
-        const playerNameDisplay = document.getElementById('playerName');
-        const playerHealthDisplay = document.getElementById('playerHealth');
-        const startButton = document.getElementById('startButton');
-        const attackButton1 = document.getElementById('attackButton1');
-        const attackButton2 = document.getElementById('attackButton2');
-        const attackButton3 = document.getElementById('attackButton3');
-        const attackButtons = document.getElementById('attackButtons');
-
-        function displayMessage(message) {
-            textOutput.textContent += `\n${message}`;
-        }
-
-        function startGame() {
-            playerName = prompt("Wie heißt du, Abenteurer?");
-            if (playerName) {
-                playerNameDisplay.textContent = `Name: ${playerName}`;
-                playerHealthDisplay.textContent = `Lebenspunkte: ${playerHealth}`;
-                textOutput.textContent = `Willkommen, ${playerName}! Erkunde den Dungeon und kämpfe gegen Monster.`;
-                startButton.style.display = 'none';
-                attackButtons.style.display = 'block';
-                explore();
-            } else {
-                displayMessage('Du musst einen Namen eingeben, um zu spielen.');
-            }
-        }
-
-        function explore() {
-            const encounterChance = Math.random();
-            if (encounterChance < 0.5) {
-                const monsterName = ['Goblin', 'Ork', 'Kobold'][Math.floor(Math.random() * 3)];
-                const monsterHealth = Math.floor(Math.random() * 50) + 30;
-                const monsterAttack = Math.floor(Math.random() * 10) + 5;
-                currentMonster = { name: monsterName, health: monsterHealth, attack: monsterAttack };
-                displayMessage(`Ein ${monsterName} erscheint! Er hat ${monsterHealth} Lebenspunkte.`);
-                displayMonsterStatus();
-            } else {
-                displayMessage('Du findest nichts Interessantes.');
-            }
-        }
-
-        function displayMonsterStatus() {
-            displayMessage(`Der ${currentMonster.name} hat noch ${currentMonster.health} Lebenspunkte.`);
-        }
-
-        function attack(attackType) {
-            if (!currentMonster.name) {
-                displayMessage('Es gibt keinen Gegner, gegen den du kämpfen kannst.');
-                return;
-            }
-
-            const attackDamage = {
-                'Schlag': playerAttack,
-                'Stich': playerAttack * 1.5,
-                'Magie': playerAttack * 2
-            }[attackType];
-
-            // Spieler greift an
-            currentMonster.health -= attackDamage;
-            displayMessage(`Du greifst den ${currentMonster.name} mit ${attackType} an und verursachst ${attackDamage} Schaden.`);
-            displayMonsterStatus();
-
-            if (currentMonster.health <= 0) {
-                enemiesDefeated += 1;
-                displayMessage(`Du hast den ${currentMonster.name} besiegt!`);
-                currentMonster = {};
-                if (enemiesDefeated % 3 === 0) {
-                    playerLevel += 1;
-                    playerAttack += 5;
-                    playerDefense += 2;
-                    displayMessage(`Du steigst auf Level ${playerLevel} auf! Deine Angriffskraft ist jetzt ${playerAttack} und deine Verteidigung ist jetzt ${playerDefense}.`);
-                }
-                explore();
-            } else {
-                // Gegner greift zurück
-                const damageTaken = Math.max(0, currentMonster.attack - playerDefense);
-                playerHealth -= damageTaken;
-                displayMessage(`Der ${currentMonster.name} greift dich an und verursacht ${damageTaken} Schaden. Du hast noch ${playerHealth} Lebenspunkte.`);
-                
-                if (playerHealth <= 0) {
-                    displayMessage('Du wurdest besiegt! Spiel beendet.');
-                    attackButtons.style.display = 'none';
-                    startButton.style.display = 'block';
-                }
-            }
-        }
-
-        startButton.addEventListener('click', startGame);
-        attackButton1.addEventListener('click', () => attack('Schlag'));
-        attackButton2.addEventListener('click', () => attack('Stich'));
-        attackButton3.addEventListener('click', () => attack('Magie'));
-    </script>
+    <script src="dungeonwerte.js"></script>
 </body>
 </html>
