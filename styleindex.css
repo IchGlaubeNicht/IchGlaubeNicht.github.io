@@ -1,0 +1,102 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+#bubbleTeaContainer {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+    position: relative;
+    z-index: 2; /* Vordergrund */
+}
+#bubbleTea {
+    width: 300px; /* Vergrößertes Bild */
+    cursor: pointer;
+    transition: transform 0.2s ease; /* Sanfte Bewegung bei Klick */
+}
+#bubbleCount {
+    font-size: 2em;
+    margin-top: 20px;
+}
+#factoryContainer {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2; /* Vordergrund */
+}
+#sidePanel {
+    text-align: left;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    margin-right: 20px;
+    position: relative;
+    z-index: 2; /* Vordergrund */
+}
+#upgradeButton, #autoClickerButton, #factoryButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    display: block;
+    width: 100%;
+}
+.pearl {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fall 2s linear;
+    z-index: 1; /* Hintergrund */
+}
+@keyframes fall {
+    from {
+        transform: translateY(-100px) translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100vh) translateX(calc(var(--x) * 1px));
+        opacity: 0;
+    }
+}
+#resetButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 3;
+}
+#dungeonButton {
+position: absolute;
+bottom: 20px;
+right: 20px;
+padding: 10px 20px;
+font-size: 1em;
+background-color: #007bff;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}

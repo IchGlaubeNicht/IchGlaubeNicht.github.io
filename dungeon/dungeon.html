@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Game</title>
+    <link rel="stylesheet" href="styledungeon.css">
+</head>
+<body>
+
+    <div id="gameContainer">
+        <h1>Dungeon Game</h1>
+        <div id="playerInfo">
+            <div id="playerName">Name: </div>
+            <div id="playerHealth">Lebenspunkte: </div>
+            <div id="currency">Perlen: 0</div>
+        </div>
+        <div id="textOutput">Willkommen im Dungeon! Gib dir einen Namen, um zu beginnen.</div>
+        <div id="actionButtons">
+            <button id="startButton">Spiel Starten</button>
+            <button id="searchMonsterButton" style="display: none;">Gegner Suchen</button>
+        </div>
+        <div id="attackButtons" style="display: none;">
+            <button id="attackButton1">Schlag</button>
+            <button id="attackButton2">Stich</button>
+            <button id="attackButton3">Magie</button>
+        </div>
+        <div id="upgradeButtons" style="display: none;">
+            <button id="upgradeAttackButton">Upgrade Angriff (Kosten: 50 Perlen)</button>
+            <button id="upgradeDefenseButton">Upgrade Verteidigung (Kosten: 50 Perlen)</button>
+        </div>
+    </div>
+
+    <button id="backButton" onclick="window.location.href='../index.html'">Bubble Tea Clicker</button>
+    <script src="dungeonwerte.js"></script>
+</body>
+</html>

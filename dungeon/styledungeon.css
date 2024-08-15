@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    margin: 0;
+    padding: 0;
+}
+#gameContainer {
+    margin: 20px;
+    padding: 20px;
+    background: #34495e;
+    border-radius: 10px;
+}
+#textOutput {
+    margin: 20px 0;
+    height: 150px;
+    overflow-y: auto;
+    background: #2c3e50;
+    border: 1px solid #ecf0f1;
+    padding: 10px;
+    border-radius: 5px;
+}
+#actionButtons, #attackButtons, #upgradeButtons {
+    margin: 20px 0;
+}
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#backButton {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #e74c3c;
+}
+#playerInfo {
+    margin: 10px 0;
+}
+#currency {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
