@@ -7,68 +7,80 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
         }
-        #gameContainer {
-            margin-top: 50px;
+        #bubbleTeaContainer {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-left: 20px;
         }
         #bubbleTea {
             width: 300px; /* Vergrößertes Bild */
             cursor: pointer;
             transition: transform 0.2s ease; /* Sanfte Bewegung bei Klick */
         }
-        #stats {
-            margin-top: 20px;
-        }
         #bubbleCount {
             font-size: 2em;
-            margin-bottom: 10px;
-        }
-        #upgradeButton, #autoClickerButton, #factoryButton {
             margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1em;
         }
-        #autoClickerInfo, #factoryInfo {
-            margin-top: 20px;
+        #factoryContainer {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
         #sidePanel {
-            position: absolute;
-            top: 50px;
-            right: 20px;
             text-align: left;
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            margin-right: 20px;
+        }
+        #upgradeButton, #autoClickerButton, #factoryButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            display: block;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-    <div id="gameContainer">
+
+    <!-- Links: Bubble Tea Container -->
+    <div id="bubbleTeaContainer">
         <h1>Bubble Tea Clicker</h1>
         <img id="bubbleTea" src="bubble-tea.png" alt="Bubble Tea">
-        <div id="stats">
-            <div id="bubbleCount">0</div>
-            <button id="upgradeButton">Upgrade: +1 Bubble Tea pro Klick</button>
-            <div id="autoClickerInfo">
-                <button id="autoClickerButton">Auto-Clicker: 1 Bubble Tea pro Sekunde (Kosten: 50 Bubble Tea)</button>
-                <div id="autoClickerStatus">Auto-Clicker: Nicht gekauft</div>
-            </div>
-        </div>
+        <div id="bubbleCount">0</div>
     </div>
 
-    <div id="sidePanel">
+    <!-- Mitte: Fabrik -->
+    <div id="factoryContainer">
         <h3>Bubble Tea Fabrik</h3>
-        <div id="factoryInfo">
-            <button id="factoryButton">Fabrik kaufen: 10 Bubble Tea pro Sekunde (Kosten: 200 Bubble Tea)</button>
-            <div id="factoryStatus">Fabrik: Nicht gekauft</div>
-        </div>
+        <button id="factoryButton">Fabrik kaufen: 10 Bubble Tea pro Sekunde (Kosten: 200 Bubble Tea)</button>
+        <div id="factoryStatus">Fabrik: Nicht gekauft</div>
     </div>
 
+    <!-- Rechts: Shop -->
+    <div id="sidePanel">
+        <h3>Shop</h3>
+        <button id="upgradeButton">Upgrade: +1 Bubble Tea pro Klick (Kosten: 10 Bubble Tea)</button>
+        <button id="autoClickerButton">Auto-Clicker: 1 Bubble Tea pro Sekunde (Kosten: 50 Bubble Tea)</button>
+        <div id="autoClickerStatus">Auto-Clicker: Nicht gekauft</div>
+    </div>
+    
     <script>
         // Initialwerte
         let bubbleCount = 0;
