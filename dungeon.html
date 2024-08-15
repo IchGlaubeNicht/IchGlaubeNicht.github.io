@@ -26,6 +26,17 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        #backButton {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -40,6 +51,7 @@
         </div>
         <p id="status">You are in the dungeon.</p>
     </div>
+    <button id="backButton" onclick="window.location.href='index.html'">Bubble Tea Clicker</button>
     <script>
         function move(direction) {
             const status = document.getElementById('status');
