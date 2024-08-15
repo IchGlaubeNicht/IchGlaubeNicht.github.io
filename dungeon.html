@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #333;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        #game {
+            margin-top: 50px;
+        }
+        #moveButtons {
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dungeon Game</h1>
+    <div id="game">
+        <p>Welcome to the Dungeon! Use the buttons to move.</p>
+        <div id="moveButtons">
+            <button class="btn" onclick="move('north')">Move North</button>
+            <button class="btn" onclick="move('south')">Move South</button>
+            <button class="btn" onclick="move('east')">Move East</button>
+            <button class="btn" onclick="move('west')">Move West</button>
+        </div>
+        <p id="status">You are in the dungeon.</p>
+    </div>
+    <script>
+        function move(direction) {
+            const status = document.getElementById('status');
+            status.textContent = `You moved ${direction}.`;
+        }
+    </script>
+</body>
+</html>

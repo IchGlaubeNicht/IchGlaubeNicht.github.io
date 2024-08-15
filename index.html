@@ -95,6 +95,18 @@
             cursor: pointer;
             z-index: 3;
         }
+        #dungeonButton {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -119,6 +131,7 @@
     </div>
 
     <button id="resetButton">Reset</button>
+    <button id="dungeonButton" onclick="window.location.href='dungeon.html'">Einfach so.</button>
 
     <script>
         let bubbleCount = parseInt(localStorage.getItem('bubbleCount')) || 0;
