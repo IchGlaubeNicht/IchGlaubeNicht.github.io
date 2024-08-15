@@ -1,6 +1,9 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-image: url('images/sky.jpg');
+    background-size: cover, cover; /* Macht die Bilder vollständig sichtbar */
+    background-attachment: fixed, fixed; /* Hält die Bilder fixiert beim Scrollen */
+    background-position: top left, bottom center; /* Positioniert die Bilder */
     margin: 0;
     padding: 0;
     display: flex;
