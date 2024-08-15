@@ -1,71 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Bubble Tea Clicker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        #gameContainer {
+            margin-top: 50px;
+        }
+        #bubbleTea {
+            width: 150px;
+            cursor: pointer;
+        }
+        #stats {
+            margin-top: 20px;
+        }
+        #bubbleCount {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        #upgradeButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section id="home">
-        <h1>Welcome to My Portfolio</h1>
-        <p>I'm an Admin trainee.</p>
-    </section>
-
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hi, ich mag nicht programmieren</p>
-    </section>
-
-    <section id="portfolio">
-        <h2>Portfolio</h2>
-        <div class="gallery">
-            <div class="gallery-item">
-                <img src="https://via.placeholder.com/300x200" alt="Project 1">
-                <p>Project 1</p>
-            </div>
-            <div class="gallery-item">
-                <img src="https://via.placeholder.com/300x200" alt="Project 2">
-                <p>Project 2</p>
-            </div>
-            <div class="gallery-item">
-                <img src="https://via.placeholder.com/300x200" alt="Project 3">
-                <p>Project 3</p>
-            </div>
+    <div id="gameContainer">
+        <h1>Bubble Tea Clicker</h1>
+        <img id="bubbleTea" src="bubble-tea.png" alt="Bubble Tea">
+        <div id="stats">
+            <div id="bubbleCount">0</div>
+            <button id="upgradeButton">Upgrade: +1 Bubble Tea pro Klick</button>
         </div>
-    </section>
+    </div>
+    
+    <script>
+        // Initialwerte
+        let bubbleCount = 0;
+        let clickValue = 1;
 
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <form id="contact-form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+        // DOM-Elemente
+        const bubbleTea = document.getElementById('bubbleTea');
+        const bubbleCountDisplay = document.getElementById('bubbleCount');
+        const upgradeButton = document.getElementById('upgradeButton');
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+        // Event-Listener für das Klicken auf das Bubble Tea Bild
+        bubbleTea.addEventListener('click', () => {
+            bubbleCount += clickValue;
+            bubbleCountDisplay.textContent = bubbleCount;
+        });
 
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" required></textarea>
-
-            <button type="submit">Send</button>
-        </form>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 My Portfolio</p>
-    </footer>
-
-    <script src="script.js"></script>
+        // Event-Listener für das Upgraden
+        upgradeButton.addEventListener('click', () => {
+            clickValue += 1;
+            upgradeButton.textContent = `Upgrade: +${clickValue} Bubble Tea pro Klick`;
+        });
+    </script>
 </body>
 </html>
