@@ -103,3 +103,46 @@ border: none;
 border-radius: 5px;
 cursor: pointer;
 }
+/* Mobile spezifische Anpassungen */
+@media (max-width: 600px) {
+    body {
+        overflow-y: auto; /* Ermöglicht vertikales Scrollen auf mobilen Geräten */
+    }
+
+    #gameContainer {
+        margin: 10px;
+    }
+
+    #bubbleTea {
+        width: 100px;
+        margin: 10px auto;
+    }
+
+    #bubbleCount {
+        font-size: 1.5em;
+    }
+
+    #upgradeButton {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+
+    #resetButton,
+    #dungeonButton {
+        width: calc(100% - 40px); /* Stellt sicher, dass die Buttons die ganze Breite nutzen */
+        margin: 10px auto;
+        padding: 10px;
+        font-size: 1em;
+        position: relative;
+    }
+
+    #resetButton {
+        background-color: red;
+        color: white;
+    }
+
+    #dungeonButton {
+        background-color: #007bff;
+        color: white;
+    }
+}
