@@ -8,54 +8,50 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: linear-gradient(135deg, #ff5f6d, #ffc371); /* Rainbow gradient */
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Rainbow-Hintergrund */
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
         }
         #gameContainer {
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            height: 100vh;
-            overflow: hidden;
+            justify-content: space-between;
+            align-items: center;
             padding: 20px;
+            height: 100vh;
+        }
+        #imageContainer {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
         #bubbleTea {
-            width: 150px;
+            width: 300px; /* Größeres Bild */
+            height: auto;
             cursor: pointer;
-            margin-right: 50px;
-        }
-        #stats {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: absolute;
+            top: 0;
         }
         #bubbleCount {
-            font-size: 2em;
-            margin-bottom: 10px;
+            font-size: 3em;
+            margin: 0;
+            z-index: 1;
+            color: #fff;
         }
         #upgradesContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
             width: 300px;
-            max-height: 90vh;
+            height: 80vh;
             overflow-y: auto;
-            margin-left: 20px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Leicht transparentes Weiß */
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
-        button {
+        #upgradesContainer button {
             margin-top: 10px;
             padding: 10px 20px;
             font-size: 1em;
-            cursor: pointer;
-        }
-        .upgrade, .bonus, .prestige, .achievement {
-            margin-top: 10px;
         }
         .achievement {
             color: green;
@@ -64,65 +60,37 @@
 </head>
 <body>
     <div id="gameContainer">
-        <div id="bubbleTeaContainer">
+        <div id="imageContainer">
             <img id="bubbleTea" src="luca-bubble.png" alt="Bubble Tea">
-        </div>
-        <div id="stats">
             <div id="bubbleCount">0</div>
-            <button id="upgradeButton">Upgrade: +1 Bubble Tea pro Klick</button>
         </div>
         <div id="upgradesContainer">
-            <div id="autoClickerInfo">
-                <button id="autoClickerButton">Auto-Clicker: 1 Bubble Tea pro Sekunde (Kosten: 50 Bubble Tea)</button>
-                <div id="autoClickerStatus">Auto-Clicker: Nicht gekauft</div>
-            </div>
-            <div id="bonusInfo">
-                <button id="bonusButton">Bonus: 10% mehr Bubble Tea pro Klick (Kosten: 100 Bubble Tea)</button>
-                <div id="bonusStatus">Bonus: Nicht gekauft</div>
-            </div>
-            <div id="newUpgradesContainer">
-                <button id="newUpgradeButton">Neue Upgrade: +10 Bubble Tea pro Klick (Kosten: 200 Bubble Tea)</button>
-                <div id="newUpgradeStatus">Neue Upgrade: Nicht gekauft</div>
-            </div>
-            <div id="multiClickerInfo">
-                <button id="multiClickerButton">Multi-Clicker: +5 Bubble Tea pro Klick (Kosten: 300 Bubble Tea)</button>
-                <div id="multiClickerStatus">Multi-Clicker: Nicht gekauft</div>
-            </div>
-            <div id="boostInfo">
-                <button id="boostButton">Boost: Verdopple Klick-Wert für 30 Sekunden (Kosten: 500 Bubble Tea)</button>
-                <div id="boostStatus">Boost: Nicht verfügbar</div>
-            </div>
-            <div id="superBoostInfo">
-                <button id="superBoostButton">Super Boost: Verdreifache Klick-Wert für 60 Sekunden (Kosten: 800 Bubble Tea)</button>
-                <div id="superBoostStatus">Super Boost: Nicht verfügbar</div>
-            </div>
-            <div id="autoClickerUpgradeInfo">
-                <button id="autoClickerUpgradeButton">Auto-Clicker Upgrade: Verdopple Rate (Kosten: 1000 Bubble Tea)</button>
-                <div id="autoClickerUpgradeStatus">Auto-Clicker Upgrade: Nicht gekauft</div>
-            </div>
-            <div id="clickDamageUpgradeInfo">
-                <button id="clickDamageUpgradeButton">Click Damage Upgrade: +50% Klick-Wert (Kosten: 1500 Bubble Tea)</button>
-                <div id="clickDamageUpgradeStatus">Click Damage Upgrade: Nicht gekauft</div>
-            </div>
-            <div id="clickerEfficiencyUpgradeInfo">
-                <button id="clickerEfficiencyUpgradeButton">Clicker Efficiency Upgrade: Reduziere Upgrade-Kosten um 20% (Kosten: 2000 Bubble Tea)</button>
-                <div id="clickerEfficiencyUpgradeStatus">Clicker Efficiency Upgrade: Nicht gekauft</div>
-            </div>
-            <div id="bubbleTeaCollectorInfo">
-                <button id="bubbleTeaCollectorButton">Bubble Tea Collector: +2 Bubble Tea pro Sekunde (Kosten: 2500 Bubble Tea)</button>
-                <div id="bubbleTeaCollectorStatus">Bubble Tea Collector: Nicht gekauft</div>
-            </div>
-            <div id="bonusDurationUpgradeInfo">
-                <button id="bonusDurationUpgradeButton">Bonus Duration Upgrade: Verlängere Bonus-Dauer (Kosten: 3000 Bubble Tea)</button>
-                <div id="bonusDurationUpgradeStatus">Bonus Duration Upgrade: Nicht gekauft</div>
-            </div>
-            <div id="prestigeContainer">
-                <button id="prestigeButton">Prestige: Reset für Bonus (Kosten: 5000 Bubble Tea)</button>
-                <div id="prestigeStatus">Prestige: Nicht verfügbar</div>
-            </div>
-            <div id="achievementsContainer">
-                <div id="achievementsStatus">Achievements:</div>
-            </div>
+            <button id="upgradeButton">Upgrade: +1 Bubble Tea pro Klick</button>
+            <button id="autoClickerButton">Auto-Clicker: 1 Bubble Tea pro Sekunde (Kosten: 50 Bubble Tea)</button>
+            <div id="autoClickerStatus">Auto-Clicker: Nicht gekauft</div>
+            <button id="bonusButton">Bonus: 10% mehr Bubble Tea pro Klick (Kosten: 100 Bubble Tea)</button>
+            <div id="bonusStatus">Bonus: Nicht gekauft</div>
+            <button id="newUpgradeButton">Neue Upgrade: +10 Bubble Tea pro Klick (Kosten: 200 Bubble Tea)</button>
+            <div id="newUpgradeStatus">Neue Upgrade: Nicht gekauft</div>
+            <button id="multiClickerButton">Multi-Clicker: +5 Bubble Tea pro Klick (Kosten: 500 Bubble Tea)</button>
+            <div id="multiClickerStatus">Multi-Clicker: Nicht gekauft</div>
+            <button id="boostButton">Boost: Verdopple Klick-Wert für 30 Sekunden (Kosten: 300 Bubble Tea)</button>
+            <div id="boostStatus">Boost: Nicht verfügbar</div>
+            <button id="superBoostButton">Super Boost: Verdreifache Klick-Wert für 60 Sekunden (Kosten: 600 Bubble Tea)</button>
+            <div id="superBoostStatus">Super Boost: Nicht verfügbar</div>
+            <button id="autoClickerUpgradeButton">Auto-Clicker Upgrade: Verdopple Auto-Clicker Rate (Kosten: 800 Bubble Tea)</button>
+            <div id="autoClickerUpgradeStatus">Auto-Clicker Upgrade: Nicht gekauft</div>
+            <button id="clickDamageUpgradeButton">Click Damage Upgrade: 50% mehr Klick-Schaden (Kosten: 1000 Bubble Tea)</button>
+            <div id="clickDamageUpgradeStatus">Click Damage Upgrade: Nicht gekauft</div>
+            <button id="clickerEfficiencyUpgradeButton">Clicker Efficiency Upgrade: Reduziere Upgrade-Kosten um 20% (Kosten: 1200 Bubble Tea)</button>
+            <div id="clickerEfficiencyUpgradeStatus">Clicker Efficiency Upgrade: Nicht gekauft</div>
+            <button id="bubbleTeaCollectorButton">Bubble Tea Collector: +2 Bubble Tea alle 5 Sekunden (Kosten: 1500 Bubble Tea)</button>
+            <div id="bubbleTeaCollectorStatus">Bubble Tea Collector: Nicht gekauft</div>
+            <button id="bonusDurationUpgradeButton">Bonus Duration Upgrade: Verlängere Bonus-Dauer um 10 Sekunden (Kosten: 2000 Bubble Tea)</button>
+            <div id="bonusDurationUpgradeStatus">Bonus Duration Upgrade: Nicht gekauft</div>
+            <button id="prestigeButton">Prestige: Reset für Bonus (Kosten: 3000 Bubble Tea)</button>
+            <div id="prestigeStatus">Prestige: Nicht verfügbar</div>
+            <div id="achievementsStatus">Achievements:</div>
         </div>
     </div>
     
@@ -144,19 +112,19 @@
         const autoClickerCost = 50;
         const bonusCost = 100;
         const newUpgradeCost = 200;
-        const multiClickerCost = 300;
-        const boostCost = 500;
-        const superBoostCost = 800;
-        const autoClickerUpgradeCost = 1000;
-        const clickDamageUpgradeCost = 1500;
-        const clickerEfficiencyUpgradeCost = 2000;
-        const bubbleTeaCollectorCost = 2500;
-        const bonusDurationUpgradeCost = 3000;
-        const prestigeCost = 5000;
+        const multiClickerCost = 500;
+        const boostCost = 300;
+        const superBoostCost = 600;
+        const autoClickerUpgradeCost = 800;
+        const clickDamageUpgradeCost = 1000;
+        const clickerEfficiencyUpgradeCost = 1200;
+        const bubbleTeaCollectorCost = 1500;
+        const bonusDurationUpgradeCost = 2000;
+        const prestigeCost = 3000;
         const autoClickerInterval = 1000; // Intervall in Millisekunden (1 Sekunde)
         const boostDuration = 30000; // 30 Sekunden
         const superBoostDuration = 60000; // 60 Sekunden
-        const superBoostMultiplier = 3;
+        const superBoostMultiplier = 3; // Verdreifache Klick-Wert
         const achievements = [];
 
         // DOM-Elemente
@@ -196,10 +164,10 @@
                 currentClickValue *= 1.1; // 10% Bonus auf den Klick-Wert
             }
             if (boostActive) {
-                currentClickValue *= 2; // Verdopple Klick-Wert für Boost
+                currentClickValue *= 2; // Verdopple Klick-Wert durch Boost
             }
             if (superBoostActive) {
-                currentClickValue *= superBoostMultiplier; // Verdreifache Klick-Wert für Super Boost
+                currentClickValue *= superBoostMultiplier; // Verdreifache Klick-Wert durch Super Boost
             }
             bubbleCount += currentClickValue;
             bubbleCountDisplay.textContent = Math.floor(bubbleCount);
@@ -210,6 +178,8 @@
 
         // Event-Listener für das Upgraden
         upgradeButton.addEventListener('click', () => {
+            bubbleCount += clickValue;
+            bubbleCountDisplay.textContent = Math.floor(bubbleCount);
             clickValue += 1;
             upgradeButton.textContent = `Upgrade: +${clickValue} Bubble Tea pro Klick`;
         });
@@ -257,7 +227,7 @@
             }
         });
 
-        // Event-Listener für Multi-Clicker-Kauf
+        // Event-Listener für den Multi-Clicker-Kauf
         multiClickerButton.addEventListener('click', () => {
             if (bubbleCount >= multiClickerCost && !multiClickerActive) {
                 bubbleCount -= multiClickerCost;
@@ -270,7 +240,7 @@
             }
         });
 
-        // Event-Listener für Boost-Kauf
+        // Event-Listener für den Boost-Kauf
         boostButton.addEventListener('click', () => {
             if (bubbleCount >= boostCost && !boostActive) {
                 bubbleCount -= boostCost;
@@ -278,17 +248,16 @@
                 boostActive = true;
                 boostStatus.textContent = 'Boost: Aktiviert';
                 boostButton.textContent = 'Boost: Bereits gekauft';
-
-                // Boost für 30 Sekunden aktivieren
+                
+                // Boost aktivieren
                 setTimeout(() => {
                     boostActive = false;
                     boostStatus.textContent = 'Boost: Nicht verfügbar';
-                    boostButton.textContent = 'Boost: Nicht verfügbar';
                 }, boostDuration);
             }
         });
 
-        // Event-Listener für Super Boost-Kauf
+        // Event-Listener für den Super Boost-Kauf
         superBoostButton.addEventListener('click', () => {
             if (bubbleCount >= superBoostCost && !superBoostActive) {
                 bubbleCount -= superBoostCost;
@@ -296,17 +265,16 @@
                 superBoostActive = true;
                 superBoostStatus.textContent = 'Super Boost: Aktiviert';
                 superBoostButton.textContent = 'Super Boost: Bereits gekauft';
-
-                // Super Boost für 60 Sekunden aktivieren
+                
+                // Super Boost aktivieren
                 setTimeout(() => {
                     superBoostActive = false;
                     superBoostStatus.textContent = 'Super Boost: Nicht verfügbar';
-                    superBoostButton.textContent = 'Super Boost: Nicht verfügbar';
                 }, superBoostDuration);
             }
         });
 
-        // Event-Listener für Auto-Clicker Upgrade-Kauf
+        // Event-Listener für den Auto-Clicker Upgrade-Kauf
         autoClickerUpgradeButton.addEventListener('click', () => {
             if (bubbleCount >= autoClickerUpgradeCost && !autoClickerUpgradeActive) {
                 bubbleCount -= autoClickerUpgradeCost;
@@ -314,18 +282,18 @@
                 autoClickerUpgradeActive = true;
                 autoClickerUpgradeStatus.textContent = 'Auto-Clicker Upgrade: Aktiviert';
                 autoClickerUpgradeButton.textContent = 'Auto-Clicker Upgrade: Bereits gekauft';
-
-                // Verdopple Auto-Clicker Rate
-                if (autoClickerActive) {
-                    setInterval(() => {
-                        bubbleCount += 2;
+                
+                // Erhöhe die Auto-Clicker Rate
+                setInterval(() => {
+                    if (autoClickerActive) {
+                        bubbleCount += 2; // Erhöhe Rate auf 2 pro Sekunde
                         bubbleCountDisplay.textContent = Math.floor(bubbleCount);
-                    }, autoClickerInterval);
-                }
+                    }
+                }, autoClickerInterval / 2); // Verdopple die Rate
             }
         });
 
-        // Event-Listener für Click Damage Upgrade-Kauf
+        // Event-Listener für das Click Damage Upgrade-Kauf
         clickDamageUpgradeButton.addEventListener('click', () => {
             if (bubbleCount >= clickDamageUpgradeCost && !clickDamageUpgradeActive) {
                 bubbleCount -= clickDamageUpgradeCost;
@@ -333,12 +301,12 @@
                 clickDamageUpgradeActive = true;
                 clickDamageUpgradeStatus.textContent = 'Click Damage Upgrade: Aktiviert';
                 clickDamageUpgradeButton.textContent = 'Click Damage Upgrade: Bereits gekauft';
-                clickValue *= 1.5;
+                clickValue *= 1.5; // Erhöhe Klick-Schaden um 50%
                 upgradeButton.textContent = `Upgrade: +${clickValue} Bubble Tea pro Klick`;
             }
         });
 
-        // Event-Listener für Clicker Efficiency Upgrade-Kauf
+        // Event-Listener für das Clicker Efficiency Upgrade-Kauf
         clickerEfficiencyUpgradeButton.addEventListener('click', () => {
             if (bubbleCount >= clickerEfficiencyUpgradeCost && !clickerEfficiencyUpgradeActive) {
                 bubbleCount -= clickerEfficiencyUpgradeCost;
@@ -346,11 +314,12 @@
                 clickerEfficiencyUpgradeActive = true;
                 clickerEfficiencyUpgradeStatus.textContent = 'Clicker Efficiency Upgrade: Aktiviert';
                 clickerEfficiencyUpgradeButton.textContent = 'Clicker Efficiency Upgrade: Bereits gekauft';
-                // Reduziere die Kosten zukünftiger Upgrades um 20%
+                // Reduziere Upgrade-Kosten um 20%
+                upgradeButton.textContent = `Upgrade: +${Math.floor(clickValue * 0.8)} Bubble Tea pro Klick`;
             }
         });
 
-        // Event-Listener für Bubble Tea Collector-Kauf
+        // Event-Listener für das Bubble Tea Collector-Kauf
         bubbleTeaCollectorButton.addEventListener('click', () => {
             if (bubbleCount >= bubbleTeaCollectorCost && !bubbleTeaCollectorActive) {
                 bubbleCount -= bubbleTeaCollectorCost;
@@ -359,17 +328,17 @@
                 bubbleTeaCollectorStatus.textContent = 'Bubble Tea Collector: Aktiviert';
                 bubbleTeaCollectorButton.textContent = 'Bubble Tea Collector: Bereits gekauft';
                 
-                // Fügt alle 5 Sekunden 2 Bubble Tea hinzu
+                // Starte den Bubble Tea Collector
                 setInterval(() => {
                     if (bubbleTeaCollectorActive) {
                         bubbleCount += 2;
                         bubbleCountDisplay.textContent = Math.floor(bubbleCount);
                     }
-                }, 5000);
+                }, 5000); // Alle 5 Sekunden
             }
         });
 
-        // Event-Listener für Bonus Duration Upgrade-Kauf
+        // Event-Listener für das Bonus Duration Upgrade-Kauf
         bonusDurationUpgradeButton.addEventListener('click', () => {
             if (bubbleCount >= bonusDurationUpgradeCost && !bonusDurationUpgradeActive) {
                 bubbleCount -= bonusDurationUpgradeCost;
@@ -377,10 +346,12 @@
                 bonusDurationUpgradeActive = true;
                 bonusDurationUpgradeStatus.textContent = 'Bonus Duration Upgrade: Aktiviert';
                 bonusDurationUpgradeButton.textContent = 'Bonus Duration Upgrade: Bereits gekauft';
+                // Verlängere Bonus-Dauer um 10 Sekunden
+                // (Dieser Effekt kann zusammen mit einem existierenden Bonus angewendet werden)
             }
         });
 
-        // Event-Listener für Prestige
+        // Event-Listener für das Prestige
         prestigeButton.addEventListener('click', () => {
             if (bubbleCount >= prestigeCost) {
                 bubbleCount = 0;
@@ -421,7 +392,6 @@
             if (bubbleCount >= 1000 && !achievements.includes('1000 Bubble Tea')) {
                 addAchievement('1000 Bubble Tea gesammelt!');
             }
-            // Weitere Errungenschaften können hier hinzugefügt werden
         }
 
         // Funktion zum Hinzufügen von Errungenschaften
