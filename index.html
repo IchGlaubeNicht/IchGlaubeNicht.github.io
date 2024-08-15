@@ -11,19 +11,13 @@
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            overflow: hidden;
         }
         #gameContainer {
             margin-top: 50px;
-            position: relative;
-            width: 100%;
-            height: 100vh;
         }
         #bubbleTea {
             width: 150px;
             cursor: pointer;
-            position: absolute;
-            transition: transform 0.2s ease; /* Animationseffekt für sanfte Bewegung */
         }
         #stats {
             margin-top: 20px;
@@ -53,7 +47,6 @@
         // Initialwerte
         let bubbleCount = 0;
         let clickValue = 1;
-        const moveAmount = 20; // Abstand in Pixeln, den das Bild bei jedem Klick bewegt
 
         // DOM-Elemente
         const bubbleTea = document.getElementById('bubbleTea');
@@ -61,22 +54,10 @@
         const upgradeButton = document.getElementById('upgradeButton');
 
         // Event-Listener für das Klicken auf das Bubble Tea Bild
-        bubbleTea.addEventListener('click', (event) => {
+        bubbleTea.addEventListener('click', () => {
             bubbleCount += clickValue;
             bubbleCountDisplay.textContent = bubbleCount;
-            moveBubbleTea(event);
         });
-
-        // Funktion zum Bewegen des Bubble Tea Bildes
-        function moveBubbleTea(event) {
-            const x = event.clientX;
-            const y = event.clientY;
-            const bubbleTeaRect = bubbleTea.getBoundingClientRect();
-            const offsetX = x - (bubbleTeaRect.width / 2);
-            const offsetY = y - (bubbleTeaRect.height / 2);
-
-            bubbleTea.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-        }
 
         // Event-Listener für das Upgraden
         upgradeButton.addEventListener('click', () => {
