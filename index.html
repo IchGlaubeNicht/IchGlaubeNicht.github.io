@@ -26,13 +26,22 @@
             font-size: 2em;
             margin-bottom: 10px;
         }
-        #upgradeButton, #autoClickerButton {
+        #buttonsContainer {
             margin-top: 20px;
+        }
+        button {
+            margin-top: 10px;
             padding: 10px 20px;
             font-size: 1em;
         }
-        #autoClickerInfo {
+        #autoClickerInfo, #bonusInfo, #newUpgradesContainer, #prestigeContainer, #achievementsContainer {
             margin-top: 20px;
+        }
+        .upgrade, .bonus, .prestige, .achievement {
+            margin-top: 10px;
+        }
+        .achievement {
+            color: green;
         }
     </style>
 </head>
@@ -42,10 +51,27 @@
         <img id="bubbleTea" src="bubble-tea.png" alt="Bubble Tea">
         <div id="stats">
             <div id="bubbleCount">0</div>
-            <button id="upgradeButton">Upgrade: +1 Bubble Tea pro Klick</button>
-            <div id="autoClickerInfo">
-                <button id="autoClickerButton">Auto-Clicker: 1 Bubble Tea pro Sekunde (Kosten: 50 Bubble Tea)</button>
-                <div id="autoClickerStatus">Auto-Clicker: Nicht gekauft</div>
+            <div id="buttonsContainer">
+                <button id="upgradeButton">Upgrade: +1 Bubble Tea pro Klick</button>
+                <div id="autoClickerInfo">
+                    <button id="autoClickerButton">Auto-Clicker: 1 Bubble Tea pro Sekunde (Kosten: 50 Bubble Tea)</button>
+                    <div id="autoClickerStatus">Auto-Clicker: Nicht gekauft</div>
+                </div>
+                <div id="bonusInfo">
+                    <button id="bonusButton">Bonus: 10% mehr Bubble Tea pro Klick (Kosten: 100 Bubble Tea)</button>
+                    <div id="bonusStatus">Bonus: Nicht gekauft</div>
+                </div>
+                <div id="newUpgradesContainer">
+                    <button id="newUpgradeButton">Neue Upgrade: +5 Bubble Tea pro Klick (Kosten: 200 Bubble Tea)</button>
+                    <div id="newUpgradeStatus">Neue Upgrade: Nicht gekauft</div>
+                </div>
+                <div id="prestigeContainer">
+                    <button id="prestigeButton">Prestige: Reset für Bonus (Kosten: 1000 Bubble Tea)</button>
+                    <div id="prestigeStatus">Prestige: Nicht verfügbar</div>
+                </div>
+                <div id="achievementsContainer">
+                    <div id="achievementsStatus">Achievements:</div>
+                </div>
             </div>
         </div>
     </div>
@@ -55,8 +81,15 @@
         let bubbleCount = 0;
         let clickValue = 1;
         let autoClickerActive = false;
+        let bonusActive = false;
+        let newUpgradeActive = false;
+        let prestigeActive = false;
         const autoClickerCost = 50;
+        const bonusCost = 100;
+        const newUpgradeCost = 200;
+        const prestigeCost = 1000;
         const autoClickerInterval = 1000; // Intervall in Millisekunden (1 Sekunde)
+        const achievements = [];
 
         // DOM-Elemente
         const bubbleTea = document.getElementById('bubbleTea');
@@ -64,11 +97,25 @@
         const upgradeButton = document.getElementById('upgradeButton');
         const autoClickerButton = document.getElementById('autoClickerButton');
         const autoClickerStatus = document.getElementById('autoClickerStatus');
+        const bonusButton = document.getElementById('bonusButton');
+        const bonusStatus = document.getElementById('bonusStatus');
+        const newUpgradeButton = document.getElementById('newUpgradeButton');
+        const newUpgradeStatus = document.getElementById('newUpgradeStatus');
+        const prestigeButton = document.getElementById('prestigeButton');
+        const prestigeStatus = document.getElementById('prestigeStatus');
+        const achievementsStatus = document.getElementById('achievementsStatus');
 
         // Event-Listener für das Klicken auf das Bubble Tea Bild
         bubbleTea.addEventListener('click', () => {
-            bubbleCount += clickValue;
-            bubbleCountDisplay.textContent = bubbleCount;
+            let currentClickValue = clickValue;
+            if (bonusActive) {
+                currentClickValue *= 1.1; // 10% Bonus auf den Klick-Wert
+            }
+            bubbleCount += currentClickValue;
+            bubbleCountDisplay.textContent = Math.floor(bubbleCount);
+
+            // Überprüfe für Errungenschaften
+            checkAchievements();
         });
 
         // Event-Listener für das Upgraden
@@ -90,11 +137,70 @@
                 setInterval(() => {
                     if (autoClickerActive) {
                         bubbleCount += 1;
-                        bubbleCountDisplay.textContent = bubbleCount;
+                        bubbleCountDisplay.textContent = Math.floor(bubbleCount);
                     }
                 }, autoClickerInterval);
             }
         });
+
+        // Event-Listener für den Bonus-Kauf
+        bonusButton.addEventListener('click', () => {
+            if (bubbleCount >= bonusCost && !bonusActive) {
+                bubbleCount -= bonusCost;
+                bubbleCountDisplay.textContent = bubbleCount;
+                bonusActive = true;
+                bonusStatus.textContent = 'Bonus: Aktiviert';
+                bonusButton.textContent = 'Bonus: Bereits gekauft';
+            }
+        });
+
+        // Event-Listener für das neue Upgrade-Kauf
+        newUpgradeButton.addEventListener('click', () => {
+            if (bubbleCount >= newUpgradeCost && !newUpgradeActive) {
+                bubbleCount -= newUpgradeCost;
+                bubbleCountDisplay.textContent = bubbleCount;
+                newUpgradeActive = true;
+                clickValue += 5;
+                newUpgradeStatus.textContent = 'Neue Upgrade: Aktiviert';
+                newUpgradeButton.textContent = 'Neue Upgrade: Bereits gekauft';
+                upgradeButton.textContent = `Upgrade: +${clickValue} Bubble Tea pro Klick`;
+            }
+        });
+
+        // Event-Listener für das Prestige
+        prestigeButton.addEventListener('click', () => {
+            if (bubbleCount >= prestigeCost) {
+                bubbleCount = 0;
+                clickValue = 1;
+                autoClickerActive = false;
+                bonusActive = false;
+                newUpgradeActive = false;
+                autoClickerStatus.textContent = 'Auto-Clicker: Nicht gekauft';
+                bonusStatus.textContent = 'Bonus: Nicht gekauft';
+                newUpgradeStatus.textContent = 'Neue Upgrade: Nicht gekauft';
+                prestigeActive = true;
+                prestigeStatus.textContent = 'Prestige: Aktiviert';
+                prestigeButton.textContent = 'Prestige: Bereits genutzt';
+                
+                // Add achievement for prestige
+                addAchievement('Erster Prestige!');
+            }
+        });
+
+        // Funktion zur Überprüfung von Errungenschaften
+        function checkAchievements() {
+            if (bubbleCount >= 1000 && !achievements.includes('1000 Bubble Tea')) {
+                addAchievement('1000 Bubble Tea gesammelt!');
+            }
+        }
+
+        // Funktion zum Hinzufügen von Errungenschaften
+        function addAchievement(name) {
+            if (!achievements.includes(name)) {
+                achievements.push(name);
+                achievementsStatus.innerHTML += `<div class="achievement">${name}</div>`;
+            }
+        }
     </script>
 </body>
 </html>
