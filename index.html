@@ -56,6 +56,7 @@
         let bubbleCount = 0;
         let clickValue = 1;
         let autoClickerActive = false;
+        let upgradeCost = 10; // Anfangskosten für das Upgrade
         const autoClickerCost = 50;
         const autoClickerInterval = 1000; // Intervall in Millisekunden (1 Sekunde)
 
@@ -74,8 +75,15 @@
 
         // Event-Listener für das Upgraden
         upgradeButton.addEventListener('click', () => {
-            clickValue += 1;
-            upgradeButton.textContent = `Upgrade: +${clickValue} Bubble Tea pro Klick`;
+            if (bubbleCount >= upgradeCost) {
+                bubbleCount -= upgradeCost;
+                clickValue += 1;
+                upgradeCost = Math.floor(upgradeCost * 1.5); // Erhöhe den Preis für das nächste Upgrade
+                bubbleCountDisplay.textContent = bubbleCount;
+                upgradeButton.textContent = `Upgrade: +${clickValue} Bubble Tea pro Klick (Kosten: ${upgradeCost})`;
+            } else {
+                alert('Nicht genug Bubble Tea für das Upgrade!');
+            }
         });
 
         // Event-Listener für den Auto-Clicker-Kauf
