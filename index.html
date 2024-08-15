@@ -16,9 +16,9 @@
             margin-top: 50px;
         }
         #bubbleTea {
-        width: 300px; /* Vergrößertes Bild */
-        cursor: pointer;
-        transition: transform 0.2s ease; /* Sanfte Bewegung bei Klick */
+            width: 300px; /* Vergrößertes Bild */
+            cursor: pointer;
+            transition: transform 0.2s ease; /* Sanfte Bewegung bei Klick */
         }
         #stats {
             margin-top: 20px;
@@ -27,13 +27,23 @@
             font-size: 2em;
             margin-bottom: 10px;
         }
-        #upgradeButton, #autoClickerButton {
+        #upgradeButton, #autoClickerButton, #factoryButton {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 1em;
         }
-        #autoClickerInfo {
+        #autoClickerInfo, #factoryInfo {
             margin-top: 20px;
+        }
+        #sidePanel {
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            text-align: left;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -50,14 +60,27 @@
             </div>
         </div>
     </div>
-    
+
+    <div id="sidePanel">
+        <h3>Bubble Tea Fabrik</h3>
+        <div id="factoryInfo">
+            <button id="factoryButton">Fabrik kaufen: 10 Bubble Tea pro Sekunde (Kosten: 200 Bubble Tea)</button>
+            <div id="factoryStatus">Fabrik: Nicht gekauft</div>
+        </div>
+    </div>
+
     <script>
         // Initialwerte
         let bubbleCount = 0;
         let clickValue = 1;
         let autoClickerActive = false;
+        let upgradeCost = 10; // Anfangskosten für das Upgrade
         const autoClickerCost = 50;
         const autoClickerInterval = 1000; // Intervall in Millisekunden (1 Sekunde)
+        let factoryActive = false;
+        let factoryCost = 200;
+        let factoryProduction = 10; // Fabrik produziert 10 Bubble Tea pro Sekunde
+        let factoryUpgradeCost = 400; // Upgradekosten für die Fabrik
 
         // DOM-Elemente
         const bubbleTea = document.getElementById('bubbleTea');
@@ -65,6 +88,8 @@
         const upgradeButton = document.getElementById('upgradeButton');
         const autoClickerButton = document.getElementById('autoClickerButton');
         const autoClickerStatus = document.getElementById('autoClickerStatus');
+        const factoryButton = document.getElementById('factoryButton');
+        const factoryStatus = document.getElementById('factoryStatus');
 
         // Event-Listener für das Klicken auf das Bubble Tea Bild
         bubbleTea.addEventListener('click', () => {
@@ -74,8 +99,15 @@
 
         // Event-Listener für das Upgraden
         upgradeButton.addEventListener('click', () => {
-            clickValue += 1;
-            upgradeButton.textContent = `Upgrade: +${clickValue} Bubble Tea pro Klick`;
+            if (bubbleCount >= upgradeCost) {
+                bubbleCount -= upgradeCost;
+                clickValue += 1;
+                upgradeCost = Math.floor(upgradeCost * 1.5); // Erhöhe den Preis für das nächste Upgrade
+                bubbleCountDisplay.textContent = bubbleCount;
+                upgradeButton.textContent = `Upgrade: +${clickValue} Bubble Tea pro Klick (Kosten: ${upgradeCost})`;
+            } else {
+                alert('Nicht genug Bubble Tea für das Upgrade!');
+            }
         });
 
         // Event-Listener für den Auto-Clicker-Kauf
@@ -94,6 +126,33 @@
                         bubbleCountDisplay.textContent = bubbleCount;
                     }
                 }, autoClickerInterval);
+            }
+        });
+
+        // Event-Listener für den Fabrik-Kauf
+        factoryButton.addEventListener('click', () => {
+            if (bubbleCount >= factoryCost && !factoryActive) {
+                bubbleCount -= factoryCost;
+                bubbleCountDisplay.textContent = bubbleCount;
+                factoryActive = true;
+                factoryStatus.textContent = 'Fabrik: Aktiviert';
+                factoryButton.textContent = `Fabrik upgraden: +${factoryProduction} Bubble Tea pro Sekunde (Kosten: ${factoryUpgradeCost})`;
+
+                // Starte die Fabrikproduktion
+                setInterval(() => {
+                    if (factoryActive) {
+                        bubbleCount += factoryProduction;
+                        bubbleCountDisplay.textContent = bubbleCount;
+                    }
+                }, 1000); // 1 Sekunde Intervall
+            } else if (factoryActive && bubbleCount >= factoryUpgradeCost) {
+                bubbleCount -= factoryUpgradeCost;
+                factoryProduction += 10; // Erhöhe die Produktion um 10 Bubble Tea pro Sekunde
+                factoryUpgradeCost = Math.floor(factoryUpgradeCost * 2); // Erhöhe die Upgradekosten
+                bubbleCountDisplay.textContent = bubbleCount;
+                factoryButton.textContent = `Fabrik upgraden: +${factoryProduction} Bubble Tea pro Sekunde (Kosten: ${factoryUpgradeCost})`;
+            } else {
+                alert('Nicht genug Bubble Tea für die Fabrik oder das Upgrade!');
             }
         });
     </script>
