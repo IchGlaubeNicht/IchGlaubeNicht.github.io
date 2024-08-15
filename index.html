@@ -14,6 +14,8 @@
             justify-content: space-between;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
+            position: relative;
         }
         #bubbleTeaContainer {
             text-align: center;
@@ -22,6 +24,8 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             margin-left: 20px;
+            position: relative;
+            z-index: 2; /* Vordergrund */
         }
         #bubbleTea {
             width: 300px; /* Vergrößertes Bild */
@@ -38,6 +42,8 @@
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2; /* Vordergrund */
         }
         #sidePanel {
             text-align: left;
@@ -47,6 +53,8 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             width: 250px;
             margin-right: 20px;
+            position: relative;
+            z-index: 2; /* Vordergrund */
         }
         #upgradeButton, #autoClickerButton, #factoryButton {
             margin-top: 20px;
@@ -54,6 +62,26 @@
             font-size: 1em;
             display: block;
             width: 100%;
+        }
+        .pearl {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: black;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: fall 2s linear;
+            z-index: 1; /* Hintergrund */
+        }
+        @keyframes fall {
+            from {
+                transform: translateY(-100px) translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh) translateX(calc(var(--x) * 1px));
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -80,7 +108,7 @@
         <button id="autoClickerButton">Auto-Clicker: 1 Bubble Tea pro Sekunde (Kosten: 50 Bubble Tea)</button>
         <div id="autoClickerStatus">Auto-Clicker: Nicht gekauft</div>
     </div>
-    
+
     <script>
         // Initialwerte
         let bubbleCount = 0;
@@ -107,7 +135,23 @@
         bubbleTea.addEventListener('click', () => {
             bubbleCount += clickValue;
             bubbleCountDisplay.textContent = bubbleCount;
+            createFallingPearl(); // Eine Perle erzeugen und fallen lassen
         });
+
+        // Funktion zum Erzeugen und animieren einer Perle
+        function createFallingPearl() {
+            const pearl = document.createElement('div');
+            pearl.className = 'pearl';
+            pearl.style.left = (bubbleTea.offsetLeft + bubbleTea.clientWidth / 2 - 10) + 'px'; // Positioniere die Perle mittig über dem Bild
+            pearl.style.top = bubbleTea.offsetTop + 'px'; // Starte die Perle oben am Bild
+            pearl.style.setProperty('--x', (Math.random() - 0.5) * 200); // Zufällige horizontale Bewegung
+            document.body.appendChild(pearl);
+
+            // Entferne die Perle nach Ende der Animation
+            pearl.addEventListener('animationend', () => {
+                pearl.remove();
+            });
+        }
 
         // Event-Listener für das Upgraden
         upgradeButton.addEventListener('click', () => {
