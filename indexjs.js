@@ -2,8 +2,7 @@ let bubbleCount = parseInt(localStorage.getItem('bubbleCount')) || 0;
 let clickValue = parseInt(localStorage.getItem('clickValue')) || 1;
 let autoClickerActive = localStorage.getItem('autoClickerActive') === 'true' || false;
 let upgradeCost = parseInt(localStorage.getItem('upgradeCost')) || 10;
-const autoClickerCost = 50;
-const autoClickerInterval = 1000;
+
 let factoryActive = localStorage.getItem('factoryActive') === 'true' || false;
 let factoryCost = parseInt(localStorage.getItem('factoryCost')) || 200;
 let factoryProduction = parseInt(localStorage.getItem('factoryProduction')) || 10;
@@ -13,6 +12,11 @@ let shopActive = localStorage.getItem('shopActive') === 'true' || false;
 let shopCost = parseInt(localStorage.getItem('shopCost')) || 1000;
 let shopProduction = parseInt(localStorage.getItem('shopProduction')) || 20;
 let shopUpgradeCost = parseInt(localStorage.getItem('shopUpgradeCost')) || 2000;
+
+let socialMediaActive = localStorage.getItem('socialMediaActive') === 'true' || false;
+let socialMediaCost = 5000;  // Höherer Startpreis
+let socialMediaProduction = 100;  // Höhere Produktion
+let socialMediaUpgradeCost = 10000;  // Höherer Upgradepreis
 
 const bubbleTea = document.getElementById('bubbleTea');
 const bubbleCountDisplay = document.getElementById('bubbleCount');
@@ -24,6 +28,48 @@ const factoryStatus = document.getElementById('factoryStatus');
 const shopButton = document.getElementById('shopButton');
 const shopStatus = document.getElementById('shopStatus');
 const resetButton = document.getElementById('resetButton');
+const socialMediaButton = document.getElementById('socialMediaButton');
+const socialMediaStatus = document.getElementById('socialMediaStatus');
+const autoClickerCost = 50;
+const autoClickerInterval = 1000;
+
+
+if (socialMediaActive) {
+    socialMediaStatus.textContent = 'Social Media: Aktiviert';
+    socialMediaButton.textContent = `Social Media upgraden: +${socialMediaProduction} Bubble Tea pro Sekunde (Kosten: ${socialMediaUpgradeCost})`;
+    startSocialMedia();
+}
+
+socialMediaButton.addEventListener('click', () => {
+    if (bubbleCount >= socialMediaCost && !socialMediaActive) {
+        bubbleCount -= socialMediaCost;
+        bubbleCountDisplay.textContent = bubbleCount;
+        socialMediaActive = true;
+        socialMediaStatus.textContent = 'Social Media: Aktiviert';
+        socialMediaButton.textContent = `Social Media upgraden: +${socialMediaProduction} Bubble Tea pro Sekunde (Kosten: ${socialMediaUpgradeCost})`;
+        saveGame();
+        startSocialMedia();
+    } else if (socialMediaActive && bubbleCount >= socialMediaUpgradeCost) {
+        bubbleCount -= socialMediaUpgradeCost;
+        socialMediaProduction += 100;  // Erhöht die Produktion bei jedem Upgrade
+        socialMediaUpgradeCost = Math.floor(socialMediaUpgradeCost * 2);  // Verdoppelt die Upgrade-Kosten bei jedem Kauf
+        bubbleCountDisplay.textContent = bubbleCount;
+        socialMediaButton.textContent = `Social Media upgraden: +${socialMediaProduction} Bubble Tea pro Sekunde (Kosten: ${socialMediaUpgradeCost})`;
+        saveGame();
+    } else {
+        alert('Nicht genug Bubble Tea für Social Media oder das Upgrade!');
+    }
+});
+
+function startSocialMedia() {
+    setInterval(() => {
+        if (socialMediaActive) {
+            bubbleCount += socialMediaProduction;
+            bubbleCountDisplay.textContent = bubbleCount;
+            saveGame();
+        }
+    }, 1000);
+}
 
 bubbleTea.addEventListener('click', () => {
     bubbleCount += clickValue;
@@ -197,5 +243,14 @@ resetButton.addEventListener('click', () => {
     if (confirm('Möchtest du wirklich deinen Fortschritt zurücksetzen?')) {
         localStorage.clear();
         location.reload();
+    }
+});
+
+document.addEventListener('keydown', function(event) {
+    if (event.shiftKey && event.code === 'KeyG') {
+        bubbleCount += 100000;
+        bubbleCountDisplay.textContent = bubbleCount;
+        saveGame();
+        alert('Cheat aktiviert: 100.000 Bubble Teas hinzugefügt!');
     }
 });
