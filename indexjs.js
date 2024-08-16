@@ -9,6 +9,11 @@ let factoryCost = parseInt(localStorage.getItem('factoryCost')) || 200;
 let factoryProduction = parseInt(localStorage.getItem('factoryProduction')) || 10;
 let factoryUpgradeCost = parseInt(localStorage.getItem('factoryUpgradeCost')) || 400;
 
+let shopActive = localStorage.getItem('shopActive') === 'true' || false;
+let shopCost = parseInt(localStorage.getItem('shopCost')) || 1000;
+let shopProduction = parseInt(localStorage.getItem('shopProduction')) || 20;
+let shopUpgradeCost = parseInt(localStorage.getItem('shopUpgradeCost')) || 2000;
+
 const bubbleTea = document.getElementById('bubbleTea');
 const bubbleCountDisplay = document.getElementById('bubbleCount');
 const upgradeButton = document.getElementById('upgradeButton');
@@ -16,6 +21,8 @@ const autoClickerButton = document.getElementById('autoClickerButton');
 const autoClickerStatus = document.getElementById('autoClickerStatus');
 const factoryButton = document.getElementById('factoryButton');
 const factoryStatus = document.getElementById('factoryStatus');
+const shopButton = document.getElementById('shopButton');
+const shopStatus = document.getElementById('shopStatus');
 const resetButton = document.getElementById('resetButton');
 
 bubbleCountDisplay.textContent = bubbleCount;
@@ -31,6 +38,12 @@ if (factoryActive) {
     factoryStatus.textContent = 'Fabrik: Aktiviert';
     factoryButton.textContent = `Fabrik upgraden: +${factoryProduction} Bubble Tea pro Sekunde (Kosten: ${factoryUpgradeCost})`;
     startFactory();
+}
+
+if (shopActive) {
+    shopStatus.textContent = 'Laden: Aktiviert';
+    shopButton.textContent = `Laden upgraden: +${shopProduction} Bubble Tea pro Sekunde (Kosten: ${shopUpgradeCost})`;
+    startShop();
 }
 
 bubbleTea.addEventListener('click', () => {
@@ -99,6 +112,27 @@ factoryButton.addEventListener('click', () => {
     }
 });
 
+shopButton.addEventListener('click', () => {
+    if (bubbleCount >= shopCost && !shopActive) {
+        bubbleCount -= shopCost;
+        bubbleCountDisplay.textContent = bubbleCount;
+        shopActive = true;
+        shopStatus.textContent = 'Laden: Aktiviert';
+        shopButton.textContent = `Laden upgraden: +${shopProduction} Bubble Tea pro Sekunde (Kosten: ${shopUpgradeCost})`;
+        saveGame();
+        startShop();
+    } else if (shopActive && bubbleCount >= shopUpgradeCost) {
+        bubbleCount -= shopUpgradeCost;
+        shopProduction += 20; // Shop-Upgrade gibt mehr Bubble Tea als die Fabrik
+        shopUpgradeCost = Math.floor(shopUpgradeCost * 2);
+        bubbleCountDisplay.textContent = bubbleCount;
+        shopButton.textContent = `Laden upgraden: +${shopProduction} Bubble Tea pro Sekunde (Kosten: ${shopUpgradeCost})`;
+        saveGame();
+    } else {
+        alert('Nicht genug Bubble Tea für den Laden oder das Upgrade!');
+    }
+});
+
 function startAutoClicker() {
     setInterval(() => {
         if (autoClickerActive) {
@@ -119,6 +153,16 @@ function startFactory() {
     }, 1000);
 }
 
+function startShop() {
+    setInterval(() => {
+        if (shopActive) {
+            bubbleCount += shopProduction;
+            bubbleCountDisplay.textContent = bubbleCount;
+            saveGame();
+        }
+    }, 1000);
+}
+
 function saveGame() {
     localStorage.setItem('bubbleCount', bubbleCount);
     localStorage.setItem('clickValue', clickValue);
@@ -128,6 +172,10 @@ function saveGame() {
     localStorage.setItem('factoryCost', factoryCost);
     localStorage.setItem('factoryProduction', factoryProduction);
     localStorage.setItem('factoryUpgradeCost', factoryUpgradeCost);
+    localStorage.setItem('shopActive', shopActive);
+    localStorage.setItem('shopCost', shopCost);
+    localStorage.setItem('shopProduction', shopProduction);
+    localStorage.setItem('shopUpgradeCost', shopUpgradeCost);
 }
 
 resetButton.addEventListener('click', () => {
