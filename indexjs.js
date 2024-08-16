@@ -10,9 +10,9 @@ let factoryProduction = parseInt(localStorage.getItem('factoryProduction')) || 1
 let factoryUpgradeCost = parseInt(localStorage.getItem('factoryUpgradeCost')) || 400;
 
 let shopActive = localStorage.getItem('shopActive') === 'true' || false;
-let shopCost = parseInt(localStorage.getItem('shopCost')) || 5000;  // Erhöhte Kosten für den Laden
-let shopProduction = parseInt(localStorage.getItem('shopProduction')) || 100;  // Erhöhte Produktion
-let shopUpgradeCost = parseInt(localStorage.getItem('shopUpgradeCost')) || 10000;  // Erhöhte Upgrade-Kosten
+let shopCost = parseInt(localStorage.getItem('shopCost')) || 1000;
+let shopProduction = parseInt(localStorage.getItem('shopProduction')) || 20;
+let shopUpgradeCost = parseInt(localStorage.getItem('shopUpgradeCost')) || 2000;
 
 const bubbleTea = document.getElementById('bubbleTea');
 const bubbleCountDisplay = document.getElementById('bubbleCount');
@@ -41,7 +41,7 @@ if (factoryActive) {
 }
 
 if (shopActive) {
-    shopStatus.textContent = 'Bubble Tea Laden: Aktiviert';
+    shopStatus.textContent = 'Laden: Aktiviert';
     shopButton.textContent = `Laden upgraden: +${shopProduction} Bubble Tea pro Sekunde (Kosten: ${shopUpgradeCost})`;
     startShop();
 }
@@ -117,13 +117,13 @@ shopButton.addEventListener('click', () => {
         bubbleCount -= shopCost;
         bubbleCountDisplay.textContent = bubbleCount;
         shopActive = true;
-        shopStatus.textContent = 'Bubble Tea Laden: Aktiviert';
+        shopStatus.textContent = 'Laden: Aktiviert';
         shopButton.textContent = `Laden upgraden: +${shopProduction} Bubble Tea pro Sekunde (Kosten: ${shopUpgradeCost})`;
         saveGame();
         startShop();
     } else if (shopActive && bubbleCount >= shopUpgradeCost) {
         bubbleCount -= shopUpgradeCost;
-        shopProduction += 50;
+        shopProduction += 20; // Shop-Upgrade gibt mehr Bubble Tea als die Fabrik
         shopUpgradeCost = Math.floor(shopUpgradeCost * 2);
         bubbleCountDisplay.textContent = bubbleCount;
         shopButton.textContent = `Laden upgraden: +${shopProduction} Bubble Tea pro Sekunde (Kosten: ${shopUpgradeCost})`;
