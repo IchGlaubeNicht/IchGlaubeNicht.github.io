@@ -25,6 +25,21 @@ const shopButton = document.getElementById('shopButton');
 const shopStatus = document.getElementById('shopStatus');
 const resetButton = document.getElementById('resetButton');
 
+bubbleTea.addEventListener('click', () => {
+    bubbleCount += clickValue;
+    bubbleCountDisplay.textContent = bubbleCount;
+    saveGame();
+    createFallingPearl();
+
+    // Füge die 'clicked' Klasse hinzu
+    bubbleTea.classList.add('clicked');
+
+    // Entferne die 'clicked' Klasse nach der Animation, um sie wiederholen zu können
+    setTimeout(() => {
+        bubbleTea.classList.remove('clicked');
+    }, 200); // Dauer der Animation (0.2s)
+});
+
 bubbleCountDisplay.textContent = bubbleCount;
 upgradeButton.textContent = `Upgrade: +${clickValue} Bubble Tea pro Klick (Kosten: ${upgradeCost})`;
 
