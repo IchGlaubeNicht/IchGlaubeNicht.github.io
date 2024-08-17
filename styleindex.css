@@ -22,7 +22,7 @@ body {
 #bubbleTeaContainer {
     text-align: center;
     padding: 20px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.8); /* Hintergrund mit 80% Transparenz */
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     margin-left: 20px;
@@ -63,6 +63,22 @@ body {
     margin-top: 20px; /* Platz unter der Fabrik für den Laden */
 }
 
+#socialMediaContainer {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+    margin-top: 20px; /* Platz unter der Fabrik für den Laden */
+}
+
+#socialMediaStatus {
+    margin-top: 10px;
+    font-size: 1em;
+}
+
 #sidePanel {
     text-align: left;
     background-color: #fff;
@@ -75,7 +91,7 @@ body {
     z-index: 2;
 }
 
-#upgradeButton, #autoClickerButton, #factoryButton, #shopButton {
+#upgradeButton, #autoClickerButton, #factoryButton, #shopButton, #socialMediaButton {
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 1em;
@@ -175,5 +191,16 @@ body {
 
     #dungeonButton {
         display: none; /* Blendet den Dungeon-Button auf Mobilgeräten aus */
+    }
+
+    #socialMediaContainer {
+        margin: 10px auto;
+        width: calc(100% - 40px);
+    }
+
+    #socialMediaButton {
+        width: 100%;
+        padding: 10px;
+        font-size: 1em;
     }
 }
