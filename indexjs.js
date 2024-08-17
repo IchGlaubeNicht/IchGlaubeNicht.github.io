@@ -246,6 +246,8 @@ resetButton.addEventListener('click', () => {
     }
 });
 
+//Gibt 100k Bubble Tea zum Testen
+/*
 document.addEventListener('keydown', function(event) {
     if (event.shiftKey && event.code === 'KeyG') {
         bubbleCount += 100000;
@@ -254,3 +256,4 @@ document.addEventListener('keydown', function(event) {
         alert('Cheat aktiviert: 100.000 Bubble Teas hinzugefügt!');
     }
 });
+*/
