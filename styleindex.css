@@ -108,6 +108,7 @@ body {
     pointer-events: none;
     animation: fall 2s linear;
     z-index: 1;
+    --x: 0;
 }
 
 @keyframes fall {
