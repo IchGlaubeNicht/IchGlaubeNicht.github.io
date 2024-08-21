@@ -107,13 +107,6 @@ if (shopActive) {
     startShop();
 }
 
-bubbleTea.addEventListener('click', () => {
-    bubbleCount += clickValue;
-    bubbleCountDisplay.textContent = bubbleCount;
-    saveGame();
-    createFallingPearl();
-});
-
 function createFallingPearl() {
     const pearl = document.createElement('div');
     pearl.className = 'pearl';
