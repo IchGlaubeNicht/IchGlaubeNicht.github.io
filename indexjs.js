@@ -239,6 +239,30 @@ resetButton.addEventListener('click', () => {
     }
 });
 
+// Fügt ein Event-Listener hinzu, um die Entwicklerkonsole zu überwachen
+document.addEventListener('keydown', function(event) {
+    // Überprüft, ob der eingegebene Text "/dev" ist
+    if (event.key === '/') {
+        let command = '';
+        const commandListener = function(e) {
+            if (e.key !== 'Enter') {
+                command += e.key;
+            } else {
+                if (command === 'dev') {
+                    bubbleCount += 100000;
+                    bubbleCountDisplay.textContent = bubbleCount;
+                    saveGame();
+                    alert('Cheat aktiviert: 100.000 Bubble Teas hinzugefügt!');
+                }
+                document.removeEventListener('keydown', commandListener);
+            }
+        };
+        document.addEventListener('keydown', commandListener);
+    }
+});
+
+
+
 //Gibt 100k Bubble Tea zum Testen
 /*
 document.addEventListener('keydown', function(event) {
